@@ -1,0 +1,5 @@
+# ignore files in ANY directory named datasets, SS...
+datasets/
+SS/
+.ipynb_checkpoints/
+models/
