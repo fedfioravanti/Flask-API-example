@@ -12,7 +12,7 @@ api = Api(app)
 
 class Test(Resource):
     def get(self):
-        return 'Welcome to, Test App API!'
+        return 'Welcome to Test App API!'
 
     def post(self):
         try:
@@ -32,7 +32,7 @@ class GetPredictionOutput(Resource):
     def post(self):
         try:
             data = request.get_json()
-            predict = prediction.predict_mpg(data)
+            predict = prediction.predict_BMI_status(data)
             predictOutput = predict
             return {'predict':predictOutput}
 
