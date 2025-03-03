@@ -1,47 +1,25 @@
-# Import dependencies
-from flask import Flask, request, redirect
-from flask_restful import Resource, Api
-from flask_cors import CORS
-import os
-import prediction
+import logging
 
-# The API definition
-app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
-api = Api(app)
+# create logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
-class Test(Resource):
-    def get(self):
-        return 'Welcome to Test App API!'
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
 
-    def post(self):
-        try:
-            value = request.get_json()
-            if(value):
-                return {'Post Values': value}, 201
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-            return {"error":"Invalid format."}
+# add formatter to ch
+ch.setFormatter(formatter)
 
-        except Exception as error:
-            return {'error': error}
+# add ch to logger
+logger.addHandler(ch)
 
-class GetPredictionOutput(Resource):
-    def get(self):
-        return {"error":"Invalid Method."}
-
-    def post(self):
-        try:
-            data = request.get_json()
-            predict = prediction.predict_BMI_status(data)
-            predictOutput = predict
-            return {'predict':predictOutput}
-
-        except Exception as error:
-            return {'error': error}
-
-api.add_resource(Test,'/')
-api.add_resource(GetPredictionOutput,'/getPredictionOutput')
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+# 'application' code
+logger.debug('debug message')
+logger.info('info message')
+logger.warning('warn message')
+logger.error('error message')
+logger.critical('critical message')
