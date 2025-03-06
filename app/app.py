@@ -1,8 +1,9 @@
 # Import dependencies
-from flask import Flask, request, redirect
+from flask import Response, json, Flask, request, redirect
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import os
+
 import prediction
 
 # The API definition
@@ -38,6 +39,8 @@ class GetPredictionOutput(Resource):
 
         except Exception as error:
             return {'error': error}
+            # message = json.dumps({'error': error})
+            # return Response(message, status=422, mimetype='application/json')
 
 api.add_resource(Test,'/')
 api.add_resource(GetPredictionOutput,'/getPredictionOutput')
