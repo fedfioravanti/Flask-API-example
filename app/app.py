@@ -2,6 +2,7 @@
 from flask import Response, json, Flask, request, redirect
 from flask_restful import Resource, Api
 from flask_cors import CORS
+from logger import logger
 import os
 
 import prediction
@@ -35,12 +36,12 @@ class GetPredictionOutput(Resource):
             data = request.get_json()
             predict = prediction.predict_BMI_status(data)
             predictOutput = predict
+            logger.info("Output Received")
             return {'predict':predictOutput}
 
         except Exception as error:
+            logger.error(f"Error:{error}")
             return {'error': error}
-            # message = json.dumps({'error': error})
-            # return Response(message, status=422, mimetype='application/json')
 
 api.add_resource(Test,'/')
 api.add_resource(GetPredictionOutput,'/getPredictionOutput')
@@ -48,3 +49,4 @@ api.add_resource(GetPredictionOutput,'/getPredictionOutput')
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+

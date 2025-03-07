@@ -7,7 +7,7 @@ import json
 # prediction definition
 def predict_BMI_status(config):
     # load the model from the saved file
-    pkl_filename = "model.pkl"
+    pkl_filename = "../model.pkl"
     with open(pkl_filename, 'rb') as f_in:
         model = joblib.load(f_in)
 
